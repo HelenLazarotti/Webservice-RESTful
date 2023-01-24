@@ -12,6 +12,9 @@
   "license": "ISC",
   "devDependencies": {
     "eslint": "^8.32.0",
-    "restify": "^11.0.0"
+    "restify": "^6.4.0"
+  },
+  "dependencies": {
+    "restify-cors-middleware2": "^2.2.0"
   }
 }
