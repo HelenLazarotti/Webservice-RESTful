@@ -1,25 +1,46 @@
+const db = require("../services/mysql");
+
 //meu routes vai ser um método que vou chamar lá no server/index.js:
 const routes = (server) => {
-    //padrão é:
-    server.get('/', (req, res, next) => {
-        res.send('Oi Helen, parabéns por ser resiliente.')
 
-        next();
-    })
 
-    //recurso q vau ser gerenciado por esse  meu webservice, o recurso pode ser: um produto, cadastro, categoria, etc.
+    //recurso q vai ser gerenciado por esse  meu webservice, pode ser: um produto, cadastro, categoria, etc.
 
-    //Vamos desenvolver um CRUD de de categoria, pois usa ID
+    //Vamos desenvolver um CRUD de categoria
 
-    server.get('category', (req, res, next) => {
-        res.send(['1', 'Dora']);
+    server.get('category', async (req, res, next) => {
 
-        next();
+        //troco o then/catch por async/await usando o try/catch
+        try {
+            res.send(
+                await db.categories().all()
+            )
+            next();
+
+        } catch (err) {
+            res.send(err);
+
+            next();
+        }
     });
 
-    server.post('category', (req, res, next) => {
-
+    server.post('category', async(req, res, next) => {
+    
         const { name } = req.params;
+
+        try {
+            res.send(
+                await db.categories().save(name)
+            )
+            next();
+
+        } catch (err) {
+            res.send(err);
+
+            next();
+        }
+
+        
         res.send(name);
         next();
     });
@@ -34,10 +55,13 @@ const routes = (server) => {
         next();
     });*/
 
+    //padrão é:
+    server.get('/', (req, res, next) => {
+        res.send('Oi Helen, parabéns por ser resiliente.')
+
+        next();
+    })
+
 }
-
-
-
-
 
 module.exports = routes;

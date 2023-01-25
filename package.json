@@ -12,6 +12,7 @@
   "license": "ISC",
   "devDependencies": {
     "eslint": "^8.32.0",
+    "mysql": "^2.18.1",
     "restify": "^6.4.0"
   },
   "dependencies": {
