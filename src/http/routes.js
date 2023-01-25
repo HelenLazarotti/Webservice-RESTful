@@ -5,7 +5,6 @@ const routes = (server) => {
 
 
     //recurso q vai ser gerenciado por esse  meu webservice, pode ser: um produto, cadastro, categoria, etc.
-
     //Vamos desenvolver um CRUD de categoria
 
     server.get('category', async (req, res, next) => {
@@ -15,13 +14,13 @@ const routes = (server) => {
             res.send(
                 await db.categories().all()
             )
-            next();
 
         } catch (err) {
             res.send(err);
 
-            next();
         }
+
+        next()
     });
 
     server.post('category', async(req, res, next) => {
@@ -32,13 +31,13 @@ const routes = (server) => {
             res.send(
                 await db.categories().save(name)
             )
-            next();
 
         } catch (err) {
             res.send(err);
 
-            next();
         }
+
+        next()
     });
 
     server.put('category', async (req, res, next) => {
@@ -49,13 +48,13 @@ const routes = (server) => {
             res.send(
                 await db.categories().update(id, name)
             )
-            next();
 
         } catch (err) {
             res.send(err);
 
-            next();
         }
+
+        next()
 
     });
     
@@ -66,13 +65,13 @@ const routes = (server) => {
             res.send(
                 await db.categories().del(id)
             )
-            next();
 
         } catch (err) {
             res.send(err);
 
-            next();
         }
+
+        next()
 
     });
 
