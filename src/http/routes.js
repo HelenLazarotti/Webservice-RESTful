@@ -39,21 +39,42 @@ const routes = (server) => {
 
             next();
         }
-
-        
-        res.send(name);
-        next();
     });
 
-    /*server.put('category', (req, res, next) => {
-        res.send();
-        next();
+    server.put('category', async (req, res, next) => {
+        
+        const { id, name } = req.params;
+
+        try {
+            res.send(
+                await db.categories().update(id, name)
+            )
+            next();
+
+        } catch (err) {
+            res.send(err);
+
+            next();
+        }
+
     });
     
-    server.delete('category', (req, res, next) => {
-        res.send();
-        next();
-    });*/
+    server.del('category', async(req, res, next) => {
+        const { id } = req.params;
+
+        try {
+            res.send(
+                await db.categories().del(id)
+            )
+            next();
+
+        } catch (err) {
+            res.send(err);
+
+            next();
+        }
+
+    });
 
     //padrão é:
     server.get('/', (req, res, next) => {
