@@ -1,80 +1,35 @@
-const db = require("../services/mysql");
+const categories = require('./modules/categories')
+const products = require('./modules/products')
+const users = require('./modules/users')
+
+const db = require('../services/mysql');
 
 //meu routes vai ser um método que vou chamar lá no server/index.js:
 const routes = (server) => {
 
+    categories(server)
+    products(server)
+    users(server)
+
 
     //recurso q vai ser gerenciado por esse  meu webservice, pode ser: um produto, cadastro, categoria, etc.
     //Vamos desenvolver um CRUD de categoria
-
-    server.get('category', async (req, res, next) => {
+    server.post('/autenticacao', async (req, res, next) => {
 
         //troco o then/catch por async/await usando o try/catch
         try {
+            const {email, password} = req.body
+
             res.send(
-                await db.categories().all()
-            )
-
+                await db.auth().authenticate(email, password))
+                
         } catch (err) {
-            res.send(err);
-
+            res.send(422, err);
         }
 
         next()
-    });
-
-    server.post('category', async(req, res, next) => {
-    
-        const { name } = req.params;
-
-        try {
-            res.send(
-                await db.categories().save(name)
-            )
-
-        } catch (err) {
-            res.send(err);
-
-        }
-
-        next()
-    });
-
-    server.put('category', async (req, res, next) => {
-        
-        const { id, name } = req.params;
-
-        try {
-            res.send(
-                await db.categories().update(id, name)
-            )
-
-        } catch (err) {
-            res.send(err);
-
-        }
-
-        next()
-
     });
     
-    server.del('category', async(req, res, next) => {
-        const { id } = req.params;
-
-        try {
-            res.send(
-                await db.categories().del(id)
-            )
-
-        } catch (err) {
-            res.send(err);
-
-        }
-
-        next()
-
-    });
-
     //padrão é:
     server.get('/', (req, res, next) => {
         res.send('Oi Helen, parabéns por ser resiliente.')

@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 //chamo o arq do servidor q criei:
 const server = require('./server')
 
